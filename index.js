@@ -40,21 +40,70 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 							rating: 0,
 						};
 
-						//Render Movie to DOM
-						document.querySelector('.movie-body').innerHTML += `
-                <div class='movie'>
-                    <div class='movieDetails'>
-                        <h1 class='movieTitle'>${mergedMovieData.title}</h1>
-                        <p class='movieYear'>${mergedMovieData.year}</p>
-                        <p class='runtime'>${mergedMovieData.runtime}</p>
-                        <p class='plot'>${mergedMovieData.plot}</p>
-                    </div>
-                    <div class='actions'>
-                    <input class='watched' type='checkbox' id='${mergedMovieData.title}'>
-                    </div>
-                    <img class='moviePoster' src='${mergedMovieData.poster}'>
-                </div>
-                `;
+						// //Create Elements
+						const movieCard = document.createElement('div');
+						movieCard.classList.add('movie');
+
+						const movieDetails = document.createElement('div');
+						movieDetails.classList.add('movieDetails');
+
+						const movieTitle = document.createElement('h1');
+						movieTitle.classList.add('movieTitle');
+
+						const movieYear = document.createElement('p');
+						movieYear.classList.add('movieYear');
+
+						const runtime = document.createElement('p');
+						runtime.classList.add('runtime');
+
+						const plot = document.createElement('p');
+						plot.classList.add('plot');
+
+						const actions = document.createElement('div');
+						actions.classList.add('actions');
+
+						const watchedCheckbox = document.createElement('input');
+						watchedCheckbox.classList.add('watchedButton');
+						watchedCheckbox.type = 'checkbox';
+						watchedCheckbox.checked = mergedMovieData.watched;
+
+						if (mergedMovieData.watched) {
+							actions.querySelector('input').classList.add('watched');
+						}
+
+						const moviePoster = document.createElement('img');
+						moviePoster.classList.add('moviePoster');
+
+						//Append each element to its parent
+						document.querySelector('.movie-body').appendChild(movieCard);
+						movieCard.appendChild(movieDetails);
+						movieDetails.appendChild(movieTitle);
+						movieDetails.appendChild(movieYear);
+						movieDetails.appendChild(runtime);
+						movieDetails.appendChild(plot);
+						movieCard.appendChild(actions);
+						actions.appendChild(watchedCheckbox);
+						movieCard.appendChild(moviePoster);
+
+						// //Render Movie information to DOM
+
+						movieTitle.innerText = mergedMovieData.title;
+						movieYear.innerText = mergedMovieData.year;
+						runtime.innerText = mergedMovieData.runtime;
+						plot.innerText = mergedMovieData.plot;
+						moviePoster.src = mergedMovieData.poster;
+
+						//Add Event Listener to checkboxes
+
+						watchedCheckbox.addEventListener('change', (e) => {
+							mergedMovieData.watched = e.target.checked;
+							console.log(mergedMovieData.watched);
+							if (mergedMovieData.watched) {
+								movieCard.querySelector('input').classList.add('watched');
+							} else {
+								movieCard.querySelector('input').classList.remove('watched');
+							}
+						});
 					});
 			});
 		})
@@ -65,4 +114,7 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 
 //Bugs:
 //Default poster if one cannot be loaded/found
+
 //Adding event listener onto dynamically created checkboxes
+//Use append child to create elements, and use Innertext to add the informationm this should
+//allow for a event listener to work
