@@ -14,6 +14,9 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 	//Clear DOM before adding searched movies
 	document.querySelector('.movie-body').innerHTML = '';
 
+	//Creating watchList array
+	let watchList = JSON.parse(localStorage.getItem('watchList')) || [];
+
 	//Fetch request to get some basic info on the Movie
 	fetch(url, options)
 		.then((resp) => resp.json())
@@ -50,6 +53,9 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 						const movieTitle = document.createElement('h1');
 						movieTitle.classList.add('movieTitle');
 
+						const movieYearRuntime = document.createElement('div');
+						movieYearRuntime.classList.add('movieYearRuntime');
+
 						const movieYear = document.createElement('p');
 						movieYear.classList.add('movieYear');
 
@@ -63,13 +69,70 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 						actions.classList.add('actions');
 
 						const watchedCheckbox = document.createElement('input');
-						watchedCheckbox.classList.add('watchedButton');
+						watchedCheckbox.classList.add('checkbox');
 						watchedCheckbox.type = 'checkbox';
 						watchedCheckbox.checked = mergedMovieData.watched;
+						watchedCheckbox.id = `watched${mergedMovieData.title}`;
 
-						if (mergedMovieData.watched) {
-							actions.querySelector('input').classList.add('watched');
-						}
+						let existingMovie = watchList.find(
+							(m) => m.title === mergedMovieData.title
+						);
+
+						//Add Event Listeners
+						watchedCheckbox.addEventListener('change', (e) => {
+							mergedMovieData.watched = e.target.checked;
+							existingMovie = watchList.find(
+								(m) => m.title === mergedMovieData.title
+							);
+
+							console.log(existingMovie);
+
+							if (
+								mergedMovieData.watched &&
+								(!existingMovie ||
+									mergedMovieData.title !== existingMovie.title)
+							) {
+								movieCard
+									.querySelector('.watchedButton')
+									.classList.add('watched');
+								watchedLabel.innerHTML = `<span class="material-symbols-outlined">
+                        bookmark_added
+                        </span>`;
+
+								watchList.push(mergedMovieData);
+								console.log('Pushed to watchList' + watchList);
+								localStorage.setItem('watchList', JSON.stringify(watchList));
+							} else {
+								movieCard
+									.querySelector('.watchedButton')
+									.classList.remove('watched');
+								watchedLabel.innerHTML = `<span class="material-symbols-outlined">
+                        bookmark_add
+                        </span>`;
+
+								if (existingMovie) {
+									existingMovie.watched = false; // Set watched status to false
+									const movieIndex = watchList.findIndex(
+										(m) => m.title === existingMovie.title
+									);
+									if (movieIndex !== -1) {
+										watchList.splice(movieIndex, 1); // Remove the movie from the array
+										console.log('Removed from watchList' + watchList);
+										localStorage.setItem(
+											'watchList',
+											JSON.stringify(watchList)
+										); // Update local storage
+									}
+								}
+							}
+						});
+
+						const watchedLabel = document.createElement('label');
+						watchedLabel.classList.add('watchedButton');
+						watchedLabel.htmlFor = `watched${mergedMovieData.title}`;
+						watchedLabel.innerHTML = `<span class="material-symbols-outlined">
+                        bookmark_add
+                        </span>`;
 
 						const moviePoster = document.createElement('img');
 						moviePoster.classList.add('moviePoster');
@@ -78,32 +141,43 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 						document.querySelector('.movie-body').appendChild(movieCard);
 						movieCard.appendChild(movieDetails);
 						movieDetails.appendChild(movieTitle);
-						movieDetails.appendChild(movieYear);
-						movieDetails.appendChild(runtime);
+						movieDetails.appendChild(movieYearRuntime);
+						movieYearRuntime.appendChild(movieYear);
+						movieYearRuntime.appendChild(runtime);
 						movieDetails.appendChild(plot);
-						movieCard.appendChild(actions);
+						movieDetails.appendChild(actions);
+						actions.appendChild(watchedLabel);
 						actions.appendChild(watchedCheckbox);
 						movieCard.appendChild(moviePoster);
 
-						// //Render Movie information to DOM
+						//Check if movie already exists in Local Storage and is watched
+
+						if (existingMovie) {
+							// If the movie exists in local storage, update mergedMovieData with its data
+							mergedMovieData.watched = existingMovie.watched;
+						}
+						if (mergedMovieData.watched) {
+							movieCard
+								.querySelector('.watchedButton')
+								.classList.add('watched');
+							watchedLabel.innerHTML = `<span class="material-symbols-outlined">
+                bookmark_added
+                </span>`;
+						}
+
+						//Render Movie information to DOM
 
 						movieTitle.innerText = mergedMovieData.title;
 						movieYear.innerText = mergedMovieData.year;
-						runtime.innerText = mergedMovieData.runtime;
+						runtime.innerText = `Run-time: ${mergedMovieData.runtime}`;
 						plot.innerText = mergedMovieData.plot;
 						moviePoster.src = mergedMovieData.poster;
+						if (mergedMovieData.poster === 'N/A') {
+							moviePoster.src =
+								'https://www.movienewz.com/wp-content/uploads/2014/07/poster-holder.jpg';
+						}
 
 						//Add Event Listener to checkboxes
-
-						watchedCheckbox.addEventListener('change', (e) => {
-							mergedMovieData.watched = e.target.checked;
-							console.log(mergedMovieData.watched);
-							if (mergedMovieData.watched) {
-								movieCard.querySelector('input').classList.add('watched');
-							} else {
-								movieCard.querySelector('input').classList.remove('watched');
-							}
-						});
 					});
 			});
 		})

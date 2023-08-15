@@ -29,6 +29,8 @@ nav {
 
 .categories {
 	display: flex;
+	justify-content: space-evenly;
+	width: 100%;
 }
 
 #search {
@@ -78,10 +80,20 @@ nav {
 	overflow: hidden;
 }
 
+.movieYearRuntime {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
 .movieYear {
 	margin: 0.2em;
 	margin-left: 7.5%;
 	font-size: 2em;
+}
+
+.runtime {
+	font-size: 1.3em;
 }
 
 .moviePoster {
@@ -89,4 +101,25 @@ nav {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
+}
+
+.plot {
+	font-size: 1.2em;
+	padding: 0.5em;
+}
+
+.actions {
+}
+
+.checkbox {
+	visibility: hidden;
+}
+
+.watchedButton {
+	font-size: 1em;
+    margin-left: 1em;
+}
+
+.watched {
+	background-color: goldenrod;
 }
