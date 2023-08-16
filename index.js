@@ -184,6 +184,8 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 
 						//Render Movie information to DOM
 
+						console.log(mergedMovieData);
+
 						movieTitle.innerText = mergedMovieData.title;
 						movieYear.innerText = mergedMovieData.year;
 						runtime.innerText = `Run-time: ${mergedMovieData.runtime}`;
@@ -192,6 +194,13 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 						if (mergedMovieData.poster === 'N/A') {
 							moviePoster.src =
 								'https://www.movienewz.com/wp-content/uploads/2014/07/poster-holder.jpg';
+						}
+						if (!mergedMovieData.plot) {
+							plot.innerText = 'No plot found for this title :(';
+						}
+
+						if (!mergedMovieData.runtime) {
+							runtime.innerText = 'N/A';
 						}
 
 						//Add Event Listener to checkboxes
@@ -206,7 +215,6 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 //Bugs:
 //Sometimes search doesn't update if you type too quickly
 
-//Create WatchList page and export watchList to view all movies added
 //Add rating system, similar to bookmark, except 1-5 stars
 
 //Create home page, maybe show 1-2 random movies

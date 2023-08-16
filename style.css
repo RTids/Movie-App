@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700;1,900&display=swap');
+
+* {
+	font-family: 'Playfair Display', serif;
+}
+
 body {
 	background-image: radial-gradient(rgb(33, 32, 32), rgb(0, 0, 0));
 	display: grid;
@@ -103,7 +109,7 @@ nav {
 }
 
 .movieTitle {
-	font-size: 3em;
+	font-size: 2.5em;
 	margin: 0.2em;
 	margin-left: 5%;
 	margin-top: 5%;
@@ -112,20 +118,15 @@ nav {
 
 .movieYearRuntime {
 	display: flex;
+	color: rgb(184, 184, 184);
 	align-items: center;
 	justify-content: space-around;
 	border-top: 1px rgb(36, 36, 36) solid;
 	border-bottom: 1px rgb(36, 36, 36) solid;
-}
-
-.movieYear {
-	margin: 0.2em;
-	margin-left: 7.5%;
-	font-size: 2em;
-}
-
-.runtime {
-	font-size: 1.3em;
+	margin: 0;
+	padding: 0;
+	font-size: 1.5em;
+	height: 2em;
 }
 
 .moviePoster {
@@ -138,9 +139,6 @@ nav {
 .plot {
 	font-size: 1.2em;
 	padding: 0.5em;
-}
-
-.actions {
 }
 
 .checkbox {
