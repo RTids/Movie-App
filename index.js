@@ -1,4 +1,21 @@
 //Search Movie title after every letter
+
+document.addEventListener('DOMContentLoaded', () => {
+	document.querySelector('.movie-body').innerHTML = `
+		<div class="homeMovie">
+			<div class="movieDetails">
+				<h1 class="homeMovieTitle">Spider-Man: No Way Home</h1>
+				<div class="homeMovieYearRuntime">
+					<p class="movieYear">2021</p>
+					<p class="runtime">Run-time: 148 min</p>
+				</div>
+				<p class="homePlot">With Spider-Man's identity now revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear, forcing Peter to discover what it truly means to be Spider-Man.</p>
+			</div>
+				<img class="moviePoster" src="https://m.media-amazon.com/images/M/MV5BZWMyYzFjYTYtNTRjYi00OGExLWE2YzgtOGRmYjAxZTU3NzBiXkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_SX300.jpg">
+		</div>
+`;
+});
+
 document.getElementById('search').addEventListener('keyup', (e) => {
 	let searchName = e.target.value;
 
