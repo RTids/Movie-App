@@ -187,8 +187,12 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 });
 
 //Bugs:
-//Default poster if one cannot be loaded/found
+//Sometimes search doesn't update if you type too quickly
 
-//Adding event listener onto dynamically created checkboxes
-//Use append child to create elements, and use Innertext to add the informationm this should
-//allow for a event listener to work
+//Create WatchList page and export watchList to view all movies added
+//Add rating system, similar to bookmark, except 1-5 stars
+
+//Create home page, maybe show 1-2 random movies
+//Create rating page, able to sort ratings from high to low
+
+//Only search from watched/rated movies when on the watchList/rated page

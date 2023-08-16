@@ -45,7 +45,8 @@ nav {
 	color: white;
 }
 
-.movie-body {
+.movie-body,
+.watchList {
 	color: white;
 	font-size: 0.5em;
 	display: flex;
@@ -77,7 +78,6 @@ nav {
 	margin: 0.2em;
 	margin-left: 5%;
 	margin-top: 5%;
-	overflow: hidden;
 }
 
 .movieYearRuntime {
@@ -117,7 +117,11 @@ nav {
 
 .watchedButton {
 	font-size: 1em;
-    margin-left: 1em;
+	margin-left: 1em;
+}
+
+.watchedButton:hover {
+	cursor: pointer;
 }
 
 .watched {
