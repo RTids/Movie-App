@@ -1,5 +1,4 @@
-//Search Movie title after every letter
-
+//Load default movie for home screen
 document.addEventListener('DOMContentLoaded', () => {
 	document.querySelector('.movie-body').innerHTML = `
 		<div class="homeMovie">
@@ -16,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 `;
 });
 
+//Search OMDB API using searched words
 document.getElementById('search').addEventListener('keyup', (e) => {
 	let searchName = e.target.value;
 
@@ -91,6 +91,8 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 						watchedCheckbox.checked = mergedMovieData.watched;
 						watchedCheckbox.id = `watched${mergedMovieData.title}`;
 
+						//Creating variable for the current movie that, this allows for the event listeners to
+						//work on the correct movie
 						let existingMovie = watchList.find(
 							(m) => m.title === mergedMovieData.title
 						);
@@ -98,12 +100,9 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 						//Add Event Listeners
 						watchedCheckbox.addEventListener('change', (e) => {
 							mergedMovieData.watched = e.target.checked;
-							existingMovie = watchList.find(
-								(m) => m.title === mergedMovieData.title
-							);
 
-							console.log(existingMovie);
-
+							//This only runs if the movie is not watched, and not already part of the watchList array
+							//Then this if statement will run. This avoids duplicate movies in the watchList array
 							if (
 								mergedMovieData.watched &&
 								(!existingMovie ||
@@ -130,15 +129,17 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 								if (existingMovie) {
 									existingMovie.watched = false; // Set watched status to false
 									const movieIndex = watchList.findIndex(
+										//Find a title in the watchList array that matches the title
 										(m) => m.title === existingMovie.title
 									);
 									if (movieIndex !== -1) {
+										// If the movieIndex doesn't return -1, it mean the movie exists
 										watchList.splice(movieIndex, 1); // Remove the movie from the array
 										console.log('Removed from watchList' + watchList);
 										localStorage.setItem(
 											'watchList',
-											JSON.stringify(watchList)
-										); // Update local storage
+											JSON.stringify(watchList) // Update local storage
+										);
 									}
 								}
 							}
@@ -184,8 +185,6 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 
 						//Render Movie information to DOM
 
-						console.log(mergedMovieData);
-
 						movieTitle.innerText = mergedMovieData.title;
 						movieYear.innerText = mergedMovieData.year;
 						runtime.innerText = `Run-time: ${mergedMovieData.runtime}`;
@@ -195,7 +194,7 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 							moviePoster.src =
 								'https://www.movienewz.com/wp-content/uploads/2014/07/poster-holder.jpg';
 						}
-						if (!mergedMovieData.plot) {
+						if (!mergedMovieData.plot || mergedMovieData.plot === 'N/A') {
 							plot.innerText = 'No plot found for this title :(';
 						}
 
@@ -219,5 +218,3 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 
 //Create home page, maybe show 1-2 random movies
 //Create rating page, able to sort ratings from high to low
-
-//Only search from watched/rated movies when on the watchList/rated page
