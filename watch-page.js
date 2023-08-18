@@ -48,7 +48,7 @@ function renderElements(watchList) {
 				movie.watched &&
 				(!existingMovie || movie.title !== existingMovie.title)
 			) {
-				movieCard.querySelector('.watchedButton').classList.add('watched');
+				actions.classList.add('watched');
 				watchedLabel.innerHTML = `<span class="material-symbols-outlined">
         bookmark_added
         </span>`;
@@ -57,7 +57,7 @@ function renderElements(watchList) {
 				console.log('Pushed to watchList' + watchList);
 				localStorage.setItem('watchList', JSON.stringify(watchList));
 			} else {
-				movieCard.querySelector('.watchedButton').classList.remove('watched');
+				actions.classList.remove('watched');
 				watchedLabel.innerHTML = `<span class="material-symbols-outlined">
         bookmark_add
         </span>`;
@@ -88,16 +88,16 @@ function renderElements(watchList) {
 
 		// Append each element to its parent
 		document.querySelector('.watchList').appendChild(movieCard);
+		movieCard.appendChild(moviePoster);
 		movieCard.appendChild(movieDetails);
 		movieDetails.appendChild(movieTitle);
 		movieDetails.appendChild(movieYearRuntime);
 		movieYearRuntime.appendChild(movieYear);
 		movieYearRuntime.appendChild(runtime);
 		movieDetails.appendChild(plot);
-		movieDetails.appendChild(actions);
+		movieCard.appendChild(actions);
 		actions.appendChild(watchedLabel);
 		actions.appendChild(watchedCheckbox);
-		movieCard.appendChild(moviePoster);
 
 		// Check if movie already exists in Local Storage and is watched
 		if (existingMovie) {
@@ -105,7 +105,7 @@ function renderElements(watchList) {
 			movie.watched = existingMovie.watched;
 		}
 		if (movie.watched) {
-			movieCard.querySelector('.watchedButton').classList.add('watched');
+			actions.classList.add('watched');
 			watchedLabel.innerHTML = `<span class="material-symbols-outlined">
                 bookmark_added
                 </span>`;
@@ -114,7 +114,7 @@ function renderElements(watchList) {
 		// Render Movie information to DOM
 		movieTitle.innerText = movie.title;
 		movieYear.innerText = movie.year;
-		runtime.innerText = `Run-time: ${movie.runtime}`;
+		runtime.innerText = movie.runtime;
 		plot.innerText = movie.plot;
 		moviePoster.src = movie.poster;
 		if (movie.poster === 'N/A') {
@@ -130,14 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Call the function to render the watch list to the DOM on page load
 	renderElements(watchList);
-
-	// Search Movie title after every letter
-	document.getElementById('search').addEventListener('keyup', (e) => {
-		let searchName = e.target.value;
-		renderElements(watchList);
-	});
 });
-
 
 //Bugs
 //Unable to use search box on Watched Items
