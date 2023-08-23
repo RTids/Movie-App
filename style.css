@@ -15,7 +15,18 @@
 	}
 
 	.homeMovieTitle {
-		font-size: 2em !important;
+		font-size: 2.5em !important;
+	}
+
+	.homeMovie {
+		flex-direction: column-reverse;
+	}
+
+	.homePoster {
+		height: 800px;
+		aspect-ratio: 2 / 3;
+		align-self: center;
+		margin-top: 10px;
 	}
 }
 

@@ -57,9 +57,8 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 							plot: data.Plot,
 							poster: movie.Poster,
 							watched: false,
-							rating: 0,
+							rating: data.Ratings[0].Value,
 						};
-						console.log(data);
 
 						// //Create Elements
 						const movieCard = document.createElement('div');
@@ -75,6 +74,8 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 						movieYearRuntime.classList.add('movieYearRuntime');
 
 						const movieYear = document.createElement('p');
+
+						const movieRating = document.createElement('p');
 
 						const runtime = document.createElement('p');
 
@@ -159,6 +160,7 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 						movieDetails.appendChild(movieTitle);
 						movieDetails.appendChild(movieYearRuntime);
 						movieYearRuntime.appendChild(movieYear);
+						movieYearRuntime.appendChild(movieRating);
 						movieYearRuntime.appendChild(runtime);
 						movieDetails.appendChild(plot);
 						movieCard.appendChild(actions);
@@ -184,6 +186,7 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 
 						movieTitle.innerText = mergedMovieData.title;
 						movieYear.innerText = mergedMovieData.year;
+						movieRating.innerText = mergedMovieData.rating;
 						runtime.innerText = mergedMovieData.runtime;
 						plot.innerText = mergedMovieData.plot;
 						moviePoster.src = mergedMovieData.poster;
@@ -199,6 +202,10 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 							runtime.innerText = 'N/A';
 						}
 
+						if (!mergedMovieData.rating) {
+							rating.innerText = 'N/A';
+						}
+
 						//Add Event Listener to checkboxes
 					});
 			});
@@ -211,7 +218,6 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 //Bugs:
 //Sometimes search doesn't update if you type too quickly
 
-//Add rating system, similar to bookmark, except 1-5 stars
+//Add few more details from API e.g rating
 
 //Create home page, maybe show 1-2 random movies
-//Create rating page, able to sort ratings from high to low
