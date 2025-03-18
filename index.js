@@ -22,7 +22,7 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 	console.log(searchName);
 
 	//API options
-	const url = `http://www.omdbapi.com/?apikey=b2b8b2f0&s=${searchName}`;
+	const url = `http://www.omdbapi.com/?apikey=[API KEY GOES HERE]=${searchName}`;
 	const options = {
 		method: 'GET',
 		contentType: 'application/json',
