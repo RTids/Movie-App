@@ -44,7 +44,7 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 			const renderResults = results.forEach((movie) => {
 				//2nd Fetch request on Movie using different URL, to get more information from API
 				fetch(
-					`http://www.omdbapi.com/?apikey=b2b8b2f0&t=${movie.Title}`,
+					`http://www.omdbapi.com/?apikey=[API KEY GOES HERE]=${movie.Title}`,
 					options
 				)
 					.then((resp) => resp.json())
